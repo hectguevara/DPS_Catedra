@@ -1,4 +1,7 @@
-G01T
+Proyecto_DPS G01T
+PeaceNest
+
+Este proyecto fue desarrollado por:
 Sebastián Emilio Aguiñada Coto - AC232994 
 Andrea Marcela López Rosales - LR232978 
 Héctor David Guevara Escobar - GE233262 
