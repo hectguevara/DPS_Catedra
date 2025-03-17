@@ -8,5 +8,5 @@ Héctor David Guevara Escobar - GE233262
 Miguel Angel Urrutia Quintanilla - UQ230132 
 Douglas Ernesto Mejía Rivas - MR231107 
 
-Link Trello: https://trello.com/b/LufTFHfi/peacenest-scrum
+Link Trello: https://trello.com/invite/b/67d656dc2d76bae1eb673f59/ATTIb12eac46a1bb430ea3ad413a0bbf3980BE0DFC95/peacenest-scrum
 Link Mockups: https://www.figma.com/design/xclHQKs7e1YPaL8NfCZayN/DPS---PROYECTO-CATEDRA?node-id=0-1&p=f&t=wPMXbp56eyPCUfBA-0
