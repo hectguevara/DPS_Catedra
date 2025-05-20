@@ -15,10 +15,17 @@
     "@react-native-picker/picker": "^2.11.0",
     "@react-navigation/bottom-tabs": "^7.3.13",
     "@react-navigation/native": "^7.1.9",
+<<<<<<< HEAD
     "@react-navigation/native-stack": "^7.3.13",
     "date-fns": "^4.1.0",
     "expo": "~53.0.9",
     "expo-image-picker": "^16.1.4",
+=======
+    "@react-navigation/stack": "^7.3.2",
+    "date-fns": "^4.1.0",
+    "expo": "~53.0.9",
+    "expo-av": "^15.1.4",
+>>>>>>> Sebastian-Aguiñada
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -28,7 +35,9 @@
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
-    "react-native-web": "^0.20.0"
+    "react-native-web": "^0.20.0",
+    "react-native-webview": "^13.13.5",
+    "react-native-youtube-iframe": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
