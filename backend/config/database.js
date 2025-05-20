@@ -1,5 +1,10 @@
+// config/database.js
 const { Sequelize } = require("sequelize");
-require("dotenv").config();
+
+// Carga el archivo .env o .env.production según el entorno
+require("dotenv").config({
+  path: process.env.NODE_ENV === "production" ? ".env.production" : ".env",
+});
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,

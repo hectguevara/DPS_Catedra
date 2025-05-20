@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+
+// Cargar el archivo .env o .env.production según el entorno (local o producción)
+require("dotenv").config({
+  path: process.env.NODE_ENV === "production" ? ".env.production" : ".env",
+});
 
 const sequelize = require("./config/database");
 const User = require("./models/User");
@@ -9,6 +13,7 @@ const EducationalContent = require("./models/EducationalContent");
 const FavoriteQuote = require("./models/FavoriteQuote");
 const DailyQuote = require("./models/DailyQuote");
 
+// Definir relaciones entre modelos
 User.hasMany(MoodEntry, { foreignKey: "userId" });
 MoodEntry.belongsTo(User, { foreignKey: "userId" });
 
@@ -18,6 +23,7 @@ const educationRoutes = require("./routes/education");
 
 const app = express();
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
@@ -26,8 +32,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/moods", moodRoutes);
 app.use("/api/education", educationRoutes);
 
-const PORT = process.env.PORT || 4000;
+// Puerto de la aplicación
+const PORT = process.env.PORT || 3000;
 
+// Sincronizar base de datos y arrancar servidor
 sequelize
   .sync({ alter: true })
   .then(() => {
