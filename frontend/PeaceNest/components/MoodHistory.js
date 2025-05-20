@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { format } from 'date-fns';
 import { moodEntries } from '../data/moodData';
+import { ThemeContext } from '../context/ThemeContext';
 
 export default function MoodHistory({ refresh }) {
   const [entries, setEntries] = useState([]);
@@ -16,6 +17,8 @@ export default function MoodHistory({ refresh }) {
   const [selectedEmotion, setSelectedEmotion] = useState('');
   const [searchDate, setSearchDate] = useState('');
   const [datePickerVisible, setDatePickerVisible] = useState(false);
+
+  const { theme } = useContext(ThemeContext);
 
   const EMOTIONS = ['feliz', 'triste', 'enojado', 'relajado', 'neutral'];
 
@@ -59,15 +62,23 @@ export default function MoodHistory({ refresh }) {
 
   const renderItem = ({ item }) => (
     <View style={[styles.item, { backgroundColor: getColor(item.emotion) }]}>
-      <Text style={styles.date}>{format(new Date(item.date), 'dd/MM/yyyy')}</Text>
-      <Text style={styles.text}>{item.emotion.toUpperCase()}</Text>
-      {item.description ? <Text>{item.description}</Text> : null}
+      <Text style={[styles.date, { color: theme.textColor }]}>
+        {format(new Date(item.date), 'dd/MM/yyyy')}
+      </Text>
+      <Text style={[styles.text, { color: theme.textColor }]}>
+        {item.emotion.toUpperCase()}
+      </Text>
+      {item.description ? (
+        <Text style={{ color: theme.textColor }}>{item.description}</Text>
+      ) : null}
     </View>
   );
 
   return (
-    <View>
-      <Text style={styles.filterTitle}>🎯 Filtrar por emoción:</Text>
+    <View style={{ backgroundColor: theme.backgroundColor, padding: 10 }}>
+      <Text style={[styles.filterTitle, { color: theme.textColor }]}>
+        🎯 Filtrar por emoción:
+      </Text>
       <View style={styles.emotionFilter}>
         {EMOTIONS.map((e) => (
           <TouchableOpacity
@@ -75,20 +86,24 @@ export default function MoodHistory({ refresh }) {
             onPress={() => setSelectedEmotion(e === selectedEmotion ? '' : e)}
             style={[
               styles.emotionButton,
-              selectedEmotion === e && styles.selectedEmotion,
+              { backgroundColor: selectedEmotion === e ? theme.accentColor : '#eee' },
             ]}
           >
-            <Text>{e}</Text>
+            <Text style={{ color: theme.textColor }}>{e}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      <Text style={styles.filterTitle}>📅 Buscar por fecha:</Text>
+      <Text style={[styles.filterTitle, { color: theme.textColor }]}>
+        📅 Buscar por fecha:
+      </Text>
       <TouchableOpacity
         onPress={() => setDatePickerVisible(true)}
-        style={styles.dateButton}
+        style={[styles.dateButton, { backgroundColor: theme.accentColor }]}
       >
-        <Text>{searchDate ? searchDate : 'Seleccionar fecha'}</Text>
+        <Text style={{ color: theme.textColor }}>
+          {searchDate ? searchDate : 'Seleccionar fecha'}
+        </Text>
       </TouchableOpacity>
 
       <DateTimePickerModal
@@ -119,7 +134,6 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 12,
-    color: '#555',
   },
   text: {
     fontWeight: 'bold',
@@ -136,16 +150,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   emotionButton: {
-    backgroundColor: '#eee',
     padding: 8,
     margin: 4,
     borderRadius: 5,
   },
-  selectedEmotion: {
-    backgroundColor: '#cce5ff',
-  },
   dateButton: {
-    backgroundColor: '#eee',
     padding: 10,
     borderRadius: 5,
     marginBottom: 15,

@@ -1,11 +1,12 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 import { saveFavoriteQuote } from '../utils/storage';
+import { ThemeContext } from '../context/ThemeContext';
 
 export default function QuoteScreen() {
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     fetch('https://zenquotes.io/api/today')
@@ -30,14 +31,14 @@ export default function QuoteScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
       {loading ? (
-        <Text style={styles.text}>Cargando consejo...</Text>
+        <Text style={[styles.text, { color: theme.textColor }]}>Cargando consejo...</Text>
       ) : (
         <>
-          <Text style={styles.text}>{quote.q}</Text>
-          <Text style={styles.author}>– {quote.a}</Text>
-          <Button title="Guardar como favorito" onPress={guardar} />
+          <Text style={[styles.text, { color: theme.textColor }]}>{quote.q}</Text>
+          <Text style={[styles.author, { color: theme.textColor }]}>– {quote.a}</Text>
+          <Button title="Guardar como favorito" onPress={guardar} color={theme.buttonColor} />
         </>
       )}
     </View>

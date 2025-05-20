@@ -2,7 +2,11 @@ import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { ThemeContext } from '../context/ThemeContext';
 
-const temasDisponibles = ['Cyberpunk2077', 'SadBlue', 'Hope', 'Dark'];
+const temasDisponibles = [
+  'Cyberpunk2077', 'SadBlue', 'Hope', 'Dark',
+  'Forest', 'MidnightBlue', 'Sandstone', 'SoftViolet'
+];
+
 
 const ThemeScreen = () => {
   const { theme, themeName, updateTheme } = useContext(ThemeContext);

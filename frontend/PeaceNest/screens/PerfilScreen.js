@@ -13,6 +13,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
 import { ThemeContext } from '../context/ThemeContext';
+import { getOwnedItems } from '../utils/rewardSystem';
+import { storeItems } from '../data/storeItems';
 
 const emocionesDisponibles = [
   'Feliz 😄',
@@ -23,8 +25,6 @@ const emocionesDisponibles = [
   'Motivado 💪'
 ];
 
-const temasDisponibles = ['Cyberpunk2077', 'SadBlue', 'Hope', 'Dark'];
-
 const PerfilScreen = () => {
   const [editando, setEditando] = useState(false);
   const [nombre, setNombre] = useState('');
@@ -32,8 +32,9 @@ const PerfilScreen = () => {
   const [emocionFavorita, setEmocionFavorita] = useState('');
   const [favoritos, setFavoritos] = useState([]);
   const [fotoPerfil, setFotoPerfil] = useState(null);
+  const [insignias, setInsignias] = useState([]);
 
-  const { theme, themeName, updateTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -42,6 +43,7 @@ const PerfilScreen = () => {
       const emocionGuardada = await AsyncStorage.getItem('perfil_emocion');
       const favsGuardados = await AsyncStorage.getItem('perfil_favoritos');
       const fotoGuardada = await AsyncStorage.getItem('perfil_foto');
+      const owned = await getOwnedItems();
 
       setNombre(nombreGuardado || '');
       setDescripcion(descGuardada || '');
@@ -52,6 +54,13 @@ const PerfilScreen = () => {
         'Tómate 5 minutos para ti cada mañana.',
         'Escribe una cosa buena de tu día.'
       ]);
+
+      const nombresInsignias = owned
+        .map(id => storeItems.find(i => i.id === id))
+        .filter(Boolean)
+        .map(item => item.name);
+
+      setInsignias(nombresInsignias);
     };
 
     cargarDatos();
@@ -95,11 +104,7 @@ const PerfilScreen = () => {
 
       <Text style={[styles.label, { color: theme.textColor }]}>Nombre:</Text>
       {editando ? (
-        <TextInput
-          style={styles.input}
-          value={nombre}
-          onChangeText={setNombre}
-        />
+        <TextInput style={styles.input} value={nombre} onChangeText={setNombre} />
       ) : (
         <Text style={[styles.texto, { color: theme.textColor }]}>{nombre || 'No definido'}</Text>
       )}
@@ -159,27 +164,14 @@ const PerfilScreen = () => {
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.subHeader, { color: theme.textColor }]}>Temas:</Text>
-        {temasDisponibles.map((tema, i) => (
-          <TouchableOpacity
-            key={i}
-            style={{
-              padding: 10,
-              marginVertical: 5,
-              borderRadius: 8,
-              backgroundColor: themeName === tema ? theme.accentColor : '#ccc'
-            }}
-            onPress={() => updateTheme(tema)}
-          >
-            <Text style={{
-              color: themeName === tema ? '#000' : '#333',
-              textAlign: 'center',
-              fontWeight: 'bold'
-            }}>
-              {tema}
-            </Text>
-          </TouchableOpacity>
-        ))}
+        <Text style={[styles.subHeader, { color: theme.textColor }]}>Tus insignias:</Text>
+        {insignias.length === 0 ? (
+          <Text style={{ color: theme.textColor }}>Aún no tienes insignias.</Text>
+        ) : (
+          insignias.map((badge, i) => (
+            <Text key={i} style={{ color: theme.textColor }}>🏅 {badge}</Text>
+          ))
+        )}
       </View>
 
       <View style={styles.editButtonContainer}>
@@ -195,6 +187,29 @@ const PerfilScreen = () => {
           }}
         />
       </View>
+
+      <View style={{ marginTop: 20 }}>
+  <Button
+    title="Reiniciar todo"
+    color="#d9534f"
+    onPress={async () => {
+      await AsyncStorage.setItem('user_points', '100');
+      await AsyncStorage.setItem('owned_items', JSON.stringify([]));
+      await AsyncStorage.setItem('perfil_nombre', '');
+      await AsyncStorage.setItem('perfil_descripcion', '');
+      await AsyncStorage.setItem('perfil_emocion', 'Feliz 😄');
+      await AsyncStorage.setItem('perfil_favoritos', JSON.stringify([
+        'Respira profundo en momentos de estrés.',
+        'Tómate 5 minutos para ti cada mañana.',
+        'Escribe una cosa buena de tu día.'
+      ]));
+      await AsyncStorage.setItem('perfil_foto', '');
+      await AsyncStorage.setItem('theme_selected', 'Hope');
+      alert('✅ Todos los datos han sido reiniciados');
+    }}
+  />
+</View>
+
     </ScrollView>
   );
 };

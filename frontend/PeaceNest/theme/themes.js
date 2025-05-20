@@ -26,5 +26,33 @@ export const themes = {
     accentColor: '#bb86fc',
     textColor: '#ffffff',
     buttonColor: '#bb86fc'
-  }
+  },
+  Forest: {
+  backgroundColor: '#f1f8f5',
+  primaryColor: '#4caf50',
+  accentColor: '#a5d6a7',
+  textColor: '#2e7d32',
+  buttonColor: '#66bb6a'
+},
+MidnightBlue: {
+  backgroundColor: '#1a2a3a',
+  primaryColor: '#223344',
+  accentColor: '#445566',
+  textColor: '#d0d8e0',
+  buttonColor: '#3c91e6'
+},
+Sandstone: {
+  backgroundColor: '#fdf6ec',
+  primaryColor: '#e0c097',
+  accentColor: '#f0dab1',
+  textColor: '#3e3e3e',
+  buttonColor: '#deb887'
+},
+SoftViolet: {
+  backgroundColor: '#f7f3ff',
+  primaryColor: '#d1c4e9',
+  accentColor: '#b39ddb',
+  textColor: '#2c2c2c',
+  buttonColor: '#9575cd'
+}
 };

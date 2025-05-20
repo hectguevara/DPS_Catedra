@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, ScrollView, Image, Button, Linking, StyleSheet } from 'react-native';
+import { ThemeContext } from '../context/ThemeContext';
 import articles from '../data/articles.json';
 
-// Asocia los identificadores del JSON a imágenes locales
 const images = {
   imagen1: require('../assets/imagen1.jpg'),
   imagen2: require('../assets/imagen2.png'),
@@ -11,14 +11,22 @@ const images = {
 };
 
 export default function EducationalScreen() {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
       {articles.map((item) => (
-        <View key={item.id} style={styles.card}>
+        <View key={item.id} style={[styles.card, { backgroundColor: theme.primaryColor }]}>
           <Image source={images[item.image]} style={styles.image} />
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.intro}>{item.intro}</Text>
-          <Button title="LEER MÁS" onPress={() => Linking.openURL(item.articleUrl)} />
+          <Text style={[styles.title, { color: theme.textColor }]}>{item.title}</Text>
+          <Text style={[styles.intro, { color: theme.textColor }]}>{item.intro}</Text>
+          <View style={{ marginTop: 10 }}>
+            <Button
+              title="LEER MÁS"
+              color={theme.buttonColor}
+              onPress={() => Linking.openURL(item.articleUrl)}
+            />
+          </View>
         </View>
       ))}
     </ScrollView>
@@ -30,7 +38,6 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 20,
     padding: 15,
-    backgroundColor: '#f2f2f2',
     borderRadius: 10,
     elevation: 2
   },

@@ -13,7 +13,11 @@ export const addPoints = async (amount) => {
 
 export const getPoints = async () => {
   const stored = await AsyncStorage.getItem(POINTS_KEY);
-  return stored ? parseInt(stored, 10) : 0;
+  if (stored === null) {
+    await AsyncStorage.setItem(POINTS_KEY, '100'); // puntos iniciales por defecto
+    return 100;
+  }
+  return parseInt(stored, 10);
 };
 
 export const spendPoints = async (amount) => {
