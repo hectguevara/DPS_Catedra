@@ -14,8 +14,7 @@ MoodEntry.belongsTo(User, { foreignKey: "userId" });
 
 const authRoutes = require("./routes/auth");
 const moodRoutes = require("./routes/mood");
-const educationalRoutes = require("./routes/educational");
-const quoteRoutes = require("./routes/quotes");
+const educationRoutes = require("./routes/education");
 
 const app = express();
 
@@ -25,8 +24,7 @@ app.use(express.json());
 // Rutas
 app.use("/api/auth", authRoutes);
 app.use("/api/moods", moodRoutes);
-app.use("/api/educational", educationalRoutes);
-app.use("/api/quotes", quoteRoutes);
+app.use("/api/education", educationRoutes);
 
 const PORT = process.env.PORT || 4000;
 
