@@ -2,8 +2,10 @@ const express = require("express");
 const cors = require("cors");
 
 // Cargar el archivo .env o .env.production según el entorno (local o producción)
+const ENV = process.env.NODE_ENV || "development";
 require("dotenv").config({
-  path: process.env.NODE_ENV === "production" ? ".env.production" : ".env",
+  path:
+    ENV === "production" ? path.resolve(__dirname, ".env.production") : ".env",
 });
 
 const sequelize = require("./config/database");
