@@ -18,7 +18,6 @@ export default function FavoritesScreen() {
           key={index}
           style={[
             styles.card,
-            // Puedes ajustar este color si deseas un fondo más claro u oscuro según el tema
             { backgroundColor: theme.primaryColor || '#444' }
           ]}
         >
