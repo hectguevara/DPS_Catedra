@@ -1,27 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, Button, Alert, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Button, Alert, ImageBackground } from 'react-native';
+import frases from '../data/frases.json';
 import { saveFavoriteQuote } from '../utils/storage';
-import { ThemeContext } from '../context/ThemeContext';
 
 export default function QuoteScreen() {
   const [quote, setQuote] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    fetch('https://zenquotes.io/api/today')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setQuote(data[0]);
-        } else {
-          setQuote({ q: "Sigue adelante, incluso cuando sea difícil.", a: "PeaceNest" });
-        }
-      })
-      .catch(() => {
-        setQuote({ q: "Cada día es una oportunidad para mejorar.", a: "PeaceNest" });
-      })
-      .finally(() => setLoading(false));
+    const randomIndex = Math.floor(Math.random() * frases.length);
+    setQuote(frases[randomIndex]);
   }, []);
 
   const guardar = async () => {
@@ -31,22 +18,62 @@ export default function QuoteScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-      {loading ? (
-        <Text style={[styles.text, { color: theme.textColor }]}>Cargando consejo...</Text>
-      ) : (
-        <>
-          <Text style={[styles.text, { color: theme.textColor }]}>{quote.q}</Text>
-          <Text style={[styles.author, { color: theme.textColor }]}>– {quote.a}</Text>
-          <Button title="Guardar como favorito" onPress={guardar} color={theme.buttonColor} />
-        </>
-      )}
-    </View>
+    <ImageBackground
+      source={require('../assets/fondo-quote.png')}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        {quote && (
+          <View style={styles.card}>
+            <Text style={styles.text}>"{quote.texto}"</Text>
+            <Text style={styles.author}>– {quote.autor}</Text>
+            <View style={styles.button}>
+              <Button title="Guardar como favorito" onPress={guardar} color="#4CAF50" />
+            </View>
+          </View>
+        )}
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  text: { fontSize: 18, marginBottom: 10 },
-  author: { fontStyle: 'italic', marginBottom: 15 }
+  background: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  overlay: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    padding: 20,
+    flex: 1,
+    justifyContent: 'center'
+  },
+  card: {
+    backgroundColor: '#ffffffdd',
+    borderRadius: 16,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 5
+  },
+  text: {
+    fontSize: 20,
+    fontStyle: 'italic',
+    marginBottom: 15,
+    textAlign: 'center',
+    color: '#333'
+  },
+  author: {
+    fontSize: 16,
+    textAlign: 'right',
+    marginBottom: 15,
+    fontWeight: 'bold',
+    color: '#666'
+  },
+  button: {
+    marginTop: 10
+  }
 });
