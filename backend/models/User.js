@@ -2,6 +2,10 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
 const User = sequelize.define("User", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   email: {
     type: DataTypes.STRING,
     unique: true,
@@ -14,7 +18,7 @@ const User = sequelize.define("User", {
   },
   theme: {
     type: DataTypes.STRING,
-    defaultValue: "light", // light u dark
+    defaultValue: "light",
   },
   notifications: {
     type: DataTypes.BOOLEAN,

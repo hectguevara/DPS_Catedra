@@ -13,14 +13,18 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // Registro
 router.post("/register", async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   try {
     let user = await User.findOne({ where: { email } });
     if (user) return res.status(400).json({ message: "Usuario ya existe" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    user = await User.create({ email, password: hashedPassword });
+    user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
     res.status(201).json({ message: "Usuario creado exitosamente" });
   } catch (error) {
@@ -56,7 +60,7 @@ router.post("/login", async (req, res) => {
 router.get("/profile", authMiddleware, async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ["id", "email", "theme", "notifications"],
+      attributes: ["id", "name", "email", "theme", "notifications"],
     });
     if (!user)
       return res.status(404).json({ message: "Usuario no encontrado" });
