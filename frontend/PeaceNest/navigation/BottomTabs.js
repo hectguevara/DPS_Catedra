@@ -16,6 +16,7 @@ import TecnicaRespiracionScreen from "../screens/TecnicaRespiracionScreen";
 import DetalleTecnicaScreen from "../screens/DetalleTecnicaScreen";
 import MeditacionScreen from "../screens/MeditacionScreen";
 import ReproductorPixabayScreen from "../screens/ReproductorPixabayScreen";
+import ReproductorYouTubeScreen from '../screens/ReproductorYoutubeScreen';
 import HistorialScreen from "../screens/HistorialScreen";
 import MindfulnessScreen from '../screens/MindfulnessScreen';
 
@@ -57,7 +58,7 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* Tabs como pantalla principal */}
+       
         <Stack.Screen
           name="MainTabs"
           component={BottomTabs}
@@ -72,7 +73,8 @@ export default function AppNavigator() {
           component={DetalleTecnicaScreen}
         />
         <Stack.Screen name="Meditaciones" component={MeditacionScreen} />
-        <Stack.Screen name="Reproductor" component={ReproductorPixabayScreen} />
+        <Stack.Screen name="ReproductorPixabay" component={ReproductorPixabayScreen} />
+        <Stack.Screen name="ReproductorYouTube" component={ReproductorYouTubeScreen} />
         <Stack.Screen name="Historial" component={HistorialScreen} />
         <Stack.Screen name="Mindfulness" component={MindfulnessScreen} />
       </Stack.Navigator>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
+import { saveToHistory } from '../services/HistorialService';
 
 const sessions = [
   {
     id: '1',
     title: 'Meditación Profunda',
-    url: 'https://mixkit.co/free-stock-video/happy-young-woman-in-the-nature-46692/',
+    url: require('../assets/video/mixkit-woman-in-sportswear-enjoying-a-mindfulness-meditation-session-45851-hd-ready.mp4'),
   },
   {
     id: '2',
@@ -23,6 +24,10 @@ const sessions = [
 export default function MindfulnessScreen() {
   const [sound, setSound] = useState(null);
   const [currentSession, setCurrentSession] = useState(null);
+
+    useEffect(() => {
+    saveToHistory({ ...session, type: 'mindfulness' });
+  }, []);
 
   const playSession = async (session) => {
     if (sound) {

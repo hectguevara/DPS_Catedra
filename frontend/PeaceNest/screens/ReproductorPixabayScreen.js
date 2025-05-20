@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
+import { saveToHistory } from '../services/HistorialService';
 
 const tracks = [
   { id: '1', title: 'Relaxing Meditation', file: require('../assets/music/relaxing-meditation-231762.mp3') },
@@ -13,6 +14,10 @@ const tracks = [
 export default function MusicScreen() {
   const [sound, setSound] = useState(null);
   const [currentTrack, setCurrentTrack] = useState(null);
+
+   useEffect(() => {
+    saveToHistory({ ...Audio, type: 'pixabay' });
+  }, []);
 
   const playTrack = async (track) => {
     if (sound) {

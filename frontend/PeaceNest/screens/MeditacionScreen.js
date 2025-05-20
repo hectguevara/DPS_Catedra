@@ -13,7 +13,7 @@ export default function MeditacionScreen({ navigation }) {
           navigation.navigate('ReproductorPixabay', { audio: item });
           break;
         case 'mindfulness':
-          navigation.navigate('MindfulnessScreen', { session: item });
+          navigation.navigate('Mindfulness', { session: item });
           break;
         default:
           console.warn('Tipo desconocido');

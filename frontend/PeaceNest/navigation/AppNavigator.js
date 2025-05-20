@@ -5,6 +5,8 @@ import TecnicaRespiracionScreen from '../screens/TecnicaRespiracionScreen';
 import DetalleTecnicaScreen from '../screens/DetalleTecnicaScreen';
 import MeditacionScreen from '../screens/MeditacionScreen';
 import ReproductorPixabayScreen from '../screens/ReproductorPixabayScreen';
+import ReproductorYouTubeScreen from '../screens/ReproductorYoutubeScreen';
+import MindfulnessScreen from '../screens/MindfulnessScreen';
 import HistorialScreen from '../screens/HistorialScreen';
 import MenuScreen from '../screens/MenuScreen';
 
@@ -21,6 +23,8 @@ export default function AppNavigator() {
         <Stack.Screen name="Meditaciones" component={MeditacionScreen} />
         <Stack.Screen name="ReproductorPixabay" component={ReproductorPixabayScreen} />
         <Stack.Screen name="Historial" component={HistorialScreen} />
+        <Stack.Screen name="ReproductorYouTube" component={ReproductorYouTubeScreen} />
+        <Stack.Screen name="Mindfulness" component={MindfulnessScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
